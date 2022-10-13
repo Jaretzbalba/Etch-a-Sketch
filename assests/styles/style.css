@@ -1,0 +1,36 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container {
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.buttons {
+  height: 75%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 2em;
+}
+
+.grid {
+  display: grid;
+  width: 500px;
+  height: 500px;
+  background-color: var(--secondary-light);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.gridElement {
+  height: 1px;
+  width: 1px;
+  padding: 1em;
+  border: 1px solid #ddd;
+  text-align: center;
+}
