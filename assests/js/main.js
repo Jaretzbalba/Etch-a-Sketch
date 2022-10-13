@@ -6,12 +6,14 @@ let currentColor = DEFAULT_COLOR;
 let currentMode = DEFAULT_MODE;
 let currentSize = DEFAULT_SIZE;
 
-let defaultBtn = document.querySelector('.default');
+let colorPicker = document.querySelector('.colorPicker');
+let colorBtn = document.querySelector('.color');
 let rainbowBtn = document.querySelector('.rainbow');
 let eraserBtn = document.querySelector('.eraser');
 let clearBtn = document.querySelector('.clear');
 let sizeValue = document.querySelector('.sizeVal');
 let sizeSlider = document.querySelector('.sizeSlider');
+const grid = document.getElementById('grid');
 
 //event listener method
 
@@ -36,7 +38,8 @@ let sizeSlider = document.querySelector('.sizeSlider');
 
 //direct property method i.e. onclick, onmousemove, etc. ***More concise than event listener method***
 
-defaultBtn.onclick = () => setCurrentMode('color');
+colorPicker.oninput = e => setCurrentColor(e.target.value);
+colorBtn.onclick = () => setCurrentMode('color');
 rainbowBtn.onclick = () => setCurrentMode('rainbow');
 eraserBtn.onclick = () => setCurrentMode('eraser');
 clearBtn.onclick = () => reloadGrid();
@@ -46,8 +49,6 @@ sizeSlider.onchange = () => reloadGrid();
 let mouseDown = false; //create mouseDown value to keep track of onmousedown/onmouseup
 document.body.onmousedown = () => (mouseDown = true); //while mouse is pressed down, keep mouseDown as true
 document.body.onmouseup = () => (mouseDown = false); //while mouse is unpressed, keep mouseDown false
-
-const grid = document.getElementById('grid');
 
 function changeColor(e) {
   if (e.type === 'mouseover' && !mouseDown) return; //if mouse is hovering but not pressed down, don't do anything
@@ -78,6 +79,10 @@ function setupGrid(size) {
 
 function setCurrentMode(newMode) {
   currentMode = newMode;
+}
+
+function setCurrentColor(newColor) {
+  currentColor = newColor;
 }
 
 function reloadGrid() {
