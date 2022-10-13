@@ -1,10 +1,47 @@
 const DEFAULT_COLOR = '#333333';
 const DEFAULT_MODE = 'color';
-const DEFAULT_SIZE = 50;
+const DEFAULT_SIZE = 16;
 
 let currentColor = DEFAULT_COLOR;
 let currentMode = DEFAULT_MODE;
 let currentSize = DEFAULT_SIZE;
+
+let defaultBtn = document.querySelector('.default');
+let rainbowBtn = document.querySelector('.rainbow');
+let eraserBtn = document.querySelector('.eraser');
+let clearBtn = document.querySelector('.clear');
+let sizeValue = document.querySelector('.sizeVal');
+let sizeSlider = document.querySelector('.sizeSlider');
+
+//event listener method
+
+// defaultBtn.addEventListener('click', function () {
+//   setCurrentMode('color');
+// });
+// rainbowBtn.addEventListener('click', function () {
+//   setCurrentMode('rainbow');
+// });
+// eraserBtn.addEventListener('click', function () {
+//   setCurrentMode('eraser');
+// });
+// clearBtn.addEventListener('click', function () {
+//   reloadGrid();
+// });
+// sizeSlider.addEventListener('mousemove', function (e) {
+//   updateSize(e.target.value);
+// });
+// sizeSlider.addEventListener('change', function (e) {
+//   reloadGrid();
+// });
+
+//direct property method i.e. onclick, onmousemove, etc. ***More concise than event listener method***
+
+defaultBtn.onclick = () => setCurrentMode('color');
+rainbowBtn.onclick = () => setCurrentMode('rainbow');
+eraserBtn.onclick = () => setCurrentMode('eraser');
+clearBtn.onclick = () => reloadGrid();
+sizeSlider.onmousemove = e => updateSize(e.target.value);
+sizeSlider.onchange = () => reloadGrid();
 
 let mouseDown = false; //create mouseDown value to keep track of onmousedown/onmouseup
 document.body.onmousedown = () => (mouseDown = true); //while mouse is pressed down, keep mouseDown as true
@@ -39,4 +76,24 @@ function setupGrid(size) {
   }
 }
 
-setupGrid(currentSize);
+function setCurrentMode(newMode) {
+  currentMode = newMode;
+}
+
+function reloadGrid() {
+  clearGrid();
+  setupGrid(currentSize);
+}
+
+function clearGrid() {
+  grid.innerHTML = '';
+}
+
+function updateSize(newSize) {
+  sizeValue.innerHTML = `${newSize} x ${newSize}`;
+  currentSize = newSize;
+}
+
+window.onload = () => {
+  setupGrid(DEFAULT_SIZE);
+};
