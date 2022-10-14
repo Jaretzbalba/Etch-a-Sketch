@@ -8,6 +8,7 @@ let currentSize = DEFAULT_SIZE;
 
 let colorPicker = document.querySelector('.colorPicker');
 let colorBtn = document.querySelector('.color');
+let pencilBtn = document.querySelector('.pencil');
 let rainbowBtn = document.querySelector('.rainbow');
 let eraserBtn = document.querySelector('.eraser');
 let clearBtn = document.querySelector('.clear');
@@ -19,6 +20,9 @@ const grid = document.getElementById('grid');
 
 // defaultBtn.addEventListener('click', function () {
 //   setCurrentMode('color');
+// });
+// pencilBtn.addEventListener('click', function () {
+//   setCurrentMode('pencil');
 // });
 // rainbowBtn.addEventListener('click', function () {
 //   setCurrentMode('rainbow');
@@ -40,6 +44,7 @@ const grid = document.getElementById('grid');
 
 colorPicker.oninput = e => setCurrentColor(e.target.value);
 colorBtn.onclick = () => setCurrentMode('color');
+pencilBtn.onclick = () => setCurrentMode('pencil');
 rainbowBtn.onclick = () => setCurrentMode('rainbow');
 eraserBtn.onclick = () => setCurrentMode('eraser');
 clearBtn.onclick = () => reloadGrid();
@@ -61,6 +66,24 @@ function changeColor(e) {
     e.target.style.backgroundColor = currentColor;
   } else if (currentMode === 'eraser') {
     e.target.style.backgroundColor = '#fefefe';
+  } else if (currentMode === 'pencil') {
+    if (e.target.style.backgroundColor.match(/rgba/)) {
+      let currentOpacity = Number(e.target.style.backgroundColor.slice(-4, -1));
+      if (currentOpacity <= 0.9) {
+        e.target.style.backgroundColor = `rgba(0, 0, 0, ${currentOpacity + 0.1})`;
+      }
+    } else if (e.target.style.backgroundColor == 'rgb(0, 0, 0)') {
+      return;
+    } else {
+      e.target.style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
+    }
+  }
+}
+
+function shade(e) {
+  if (e.type === 'mouseover' && !mouseDown) return; //if mouse is hovering but not pressed down, don't do anything
+  if (currentMode === 'pencil') {
+    e.target.style.backgroundColor = 'hsl(0 0% 90%)';
   }
 }
 
